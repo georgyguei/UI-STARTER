@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root[data-theme="light"] {
+    --body-text: theme("colors.gray.800");
+    --body-bg: theme("colors.white");
+    --border-color: theme("colors.gray.200");
+    --inverse-text: theme("colors.white");
+    --subtle-bg: theme("colors.gray.100");
+    --subtle-text: theme("colors.gray.600");
+    --placeholder-color: theme("colors.gray.500");
+  }
+
+  :where(*, *::before, *::after) {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    word-wrap: break-word;
+  }
+
+  :where(blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre) {
+    margin: 0;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  *,
+  *::before,
+  *::after {
+    @apply border-[color:var(--border-color)];
+  }
+
+  html {
+    @apply touch-manipulation antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply relative m-0 min-h-full bg-[color:var(--body-bg)] font-body text-[var(--body-text)] leading-base;
+    transition-property: background-color;
+    transition-duration: theme("transitionDuration.normal");
+    font-feature-settings: "kern";
+  }
+}
