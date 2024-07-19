@@ -2,5 +2,8 @@
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "cSpell.words": ["biomejs", "Parens", "tailwindcss"]
+  "cSpell.words": ["biomejs", "Parens", "tailwindcss"],
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
