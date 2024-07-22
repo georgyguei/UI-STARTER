@@ -3,7 +3,7 @@ import type { FormControlProps } from '.';
 import Box from '../../layout/box';
 import type { UIComponent } from '../../type';
 
-type FormLabelProps = Pick<FormControlProps, 'isRequired'> & {
+type FormLabelProps = FormControlProps & {
   requiredIndicator?: React.ReactElement;
 };
 
@@ -19,7 +19,16 @@ type FormLabelProps = Pick<FormControlProps, 'isRequired'> & {
  * @returns The FormLabel component.
  */
 const FormLabel: UIComponent<'label', FormLabelProps> = props => {
-  const { isRequired, requiredIndicator, className, children, ...rest } = props;
+  const {
+    isRequired,
+    isInvalid,
+    isDisabled,
+    isReadOnly,
+    requiredIndicator,
+    className,
+    children,
+    ...rest
+  } = props;
 
   return (
     <Box
@@ -27,8 +36,12 @@ const FormLabel: UIComponent<'label', FormLabelProps> = props => {
       className={cn(
         isRequired ? 'flex justify-start gap-1' : 'block text-start',
         'font-medium text-md transition-common duration-normal',
+        isDisabled && 'data-[disabled="true"]:opacity-40',
         className
       )}
+      data-disabled={isDisabled}
+      data-invalid={isInvalid}
+      data-readonly={isReadOnly}
       {...rest}
     >
       {children}

@@ -23,7 +23,15 @@ export type FormControlProps = {
  * @returns The FormControl component.
  */
 const FormControl: UIComponent<'div', FormControlProps> = props => {
-  const { isInvalid, isRequired, className, children, ...rest } = props;
+  const {
+    isInvalid,
+    isRequired,
+    isDisabled,
+    isReadOnly,
+    className,
+    children,
+    ...rest
+  } = props;
 
   const formRequiredIndicatorElement = isRequired
     ? Children.toArray(children).find(child => {
@@ -34,29 +42,32 @@ const FormControl: UIComponent<'div', FormControlProps> = props => {
       }) || <FormRequiredIndicator>*</FormRequiredIndicator>
     : undefined;
 
-  const formElements = isRequired
-    ? Children.map(children, child => {
-        if (isValidElement(child)) {
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-          switch ((child as any).type.displayName) {
-            case 'FormLabel':
-              return cloneElement(child as React.ReactElement, {
-                isRequired: isRequired,
-                requiredIndicator: formRequiredIndicatorElement,
-              });
-            case 'FormRequiredIndicator':
-              return null;
-          }
-        }
-        return child;
-      })
-    : children;
+  const formElements = Children.map(children, child => {
+    if (isValidElement(child)) {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      switch ((child as any).type.displayName) {
+        case 'FormLabel':
+          return cloneElement(child as React.ReactElement, {
+            isRequired,
+            isInvalid,
+            isDisabled,
+            isReadOnly,
+            requiredIndicator: formRequiredIndicatorElement,
+          });
+        case 'FormRequiredIndicator':
+          return null;
+      }
+    }
+    return child;
+  });
 
   return (
     <Box
       className={cn('relative w-full', className)}
       role="group"
+      data-disabled={isDisabled}
       data-invalid={isInvalid}
+      data-readonly={isReadOnly}
       {...rest}
     >
       {formElements}
