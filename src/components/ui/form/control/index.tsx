@@ -119,7 +119,7 @@ const FormControl: UIComponent<'div', FormControlProps> = props => {
 
   return (
     <Box
-      className={cn('relative w-full', className)}
+      className={cn('relative flex w-full flex-col gap-3', className)}
       role="group"
       data-disabled={isDisabled}
       data-invalid={isInvalid}
