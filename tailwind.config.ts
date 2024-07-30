@@ -20,7 +20,25 @@ const config: Config = {
         xl: '1280px',
       },
     },
-    extend: customTheme,
+    extend: {
+      ...customTheme,
+      animation: {
+        border: 'borderFlash 1s',
+      },
+      keyframes: {
+        borderFlash: {
+          '0%': {
+            borderColor: 'transparent',
+          },
+          '50%': {
+            borderColor: 'red',
+          },
+          '100%': {
+            borderColor: 'transparent',
+          },
+        },
+      },
+    },
   },
   plugins: [],
 };
